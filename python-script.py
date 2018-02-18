@@ -2,6 +2,7 @@
 
 import os
 import argparse
+import requests 
 
 
 def main(args):
@@ -12,9 +13,49 @@ def main(args):
 
     print("hello {}".format(name)) 
 
+def getWebsiteSource(sites):
+    sources = []
+    for site in sites:
+        if site[:4] != "http":
+            site = "http://" + site
+        page = requests.get(site)
+        sources.append(page.text)
+
+    return sources
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Process some stuff.')
-    parser.add_argument('--name', type=str, nargs=1, help="a name to say hello to")
+
+    # base command
+    parser.add_argument("command",
+        help="the command to be executed",
+        choices=["add", "get", "set"],
+        nargs='?',
+        default="get"
+    )
+    # type of object to work on
+    parser.add_argument("type",
+        help="the command to be executed",
+        choices=["host", "network", "site"],
+        nargs='?',
+        default="site"
+    )
+    # specify name + details
+    parser.add_argument("--name", help="the command to be executed", nargs=1)
+    parser.add_argument("--ipaddress", help="the command to be executed", nargs=1)
+    parser.add_argument("--color", help="the command to be executed", nargs=1)
+
     args = parser.parse_args()
 
-    main(args)
+    if args.command == "add":
+        pass
+    elif args.command == "get":
+        if args.type == "site":
+            print(getWebsiteSource(args.name))
+
+    elif args.command == "set":
+        pass
+    else:
+        print("error")
+
+
