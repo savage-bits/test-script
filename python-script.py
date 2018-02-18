@@ -47,14 +47,20 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
+    # lets act on the arguments
+    # add command
     if args.command == "add":
         pass
+    # get command
     elif args.command == "get":
+        # getting what?
+        # getting a site
         if args.type == "site":
             print(getWebsiteSource(args.name))
-
+    # set command
     elif args.command == "set":
         pass
+    # not a recognized command
     else:
         print("error")
 
