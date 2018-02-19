@@ -56,7 +56,8 @@ if __name__ == "__main__":
         # getting what?
         # getting a site
         if args.type == "site":
-            print(getWebsiteSource(args.name))
+            if args.name:
+                print(getWebsiteSource(args.name))
     # set command
     elif args.command == "set":
         pass
